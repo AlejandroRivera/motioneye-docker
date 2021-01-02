@@ -1,0 +1,30 @@
+---
+version: "3.5"
+services:
+  motioneye:
+    container_name: motioneye
+    hostname: motioneye
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # args:
+        # MOTION_RELEASE: "4.3.2"
+    image: cyberal/motioneye-edge:latest  # Change to ccrisan/motioneye:master-armhf for ARM chips (Pi etc.)
+    ports:
+      - "8765:8765"
+        #- "7999:7999"
+        #- "8081:8081"
+        #- "8082:8082"
+        #- "8083:8083"
+    volumes:
+      - /etc/motioneye:/etc/motioneye
+      - /var/lib/motioneye:/var/lib/motioneye
+      - type: bind
+        source: /var/log/motion.log
+        target: /var/log/motion.log
+      - type: bind
+        source: /var/log/motioneye.log
+        target: /var/log/motioneye.log
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
